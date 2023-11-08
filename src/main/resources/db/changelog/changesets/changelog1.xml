@@ -1,0 +1,112 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <!-- Create Author table first -->
+    <changeSet id="1" author="nihat">
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS bookstore;
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="2" author="nihat">
+        <createTable tableName="authors">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="age" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Create Book table with foreign key reference to Author table -->
+    <changeSet id="3" author="nihat">
+        <createTable tableName="books">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_book_author" references="authors(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Create Student table -->
+    <changeSet id="4" author="nihat">
+        <createTable tableName="students">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="age" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Create User table with foreign key reference to Student table -->
+    <changeSet id="5" author="nihat">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="VARCHAR(255)"/>
+            <column name="student_id" type="BIGINT">
+                <constraints foreignKeyName="fk_user_student" references="students(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!--    <changeSet id="6" author="nihat">-->
+<!--        <createTable tableName="roles">-->
+<!--            <column name="id" type="BIGINT" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="VARCHAR(255)" >-->
+<!--                    <constraints nullable="false" unique="true"/>-->
+<!--            </column>-->
+
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+    <!-- Create Student_Books table with foreign key references to Student and Book tables -->
+    <changeSet id="7" author="nihat">
+        <createTable tableName="student_books">
+            <column name="student_id" type="BIGINT">
+                <constraints foreignKeyName="fk_student_id" references="students(id)"/>
+            </column>
+            <column name="book_id" type="BIGINT">
+                <constraints foreignKeyName="fk_book_id" references="books(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!--    <changeSet id="8" author="nihat">-->
+<!--        <createTable tableName="users_roles">-->
+<!--            <column name="user_id" type="BIGINT">-->
+<!--                <constraints foreignKeyName="fk_user_id" references="users(id)"/>-->
+<!--            </column>-->
+<!--            <column name="role_id" type="BIGINT">-->
+<!--                <constraints foreignKeyName="fk_role_id" references="roles(id)"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+    <changeSet author="liquibase-docs" id="excludeDatabasechangeloglock">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="databasechangeloglock"/>
+            </not>
+        </preConditions>
+        <sql>
+            -- This change set does nothing, just marks databasechangeloglock as executed
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
