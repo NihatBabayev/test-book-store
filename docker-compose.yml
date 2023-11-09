@@ -1,0 +1,58 @@
+version: '3.1'
+
+services:
+
+#  postgres_con:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.postgres
+#    container_name: postgres_con
+#    ports:
+#      - "5432:5432"
+#    networks:
+#      - bookstore-network
+#    volumes:
+#      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+#    environment:
+#      - POSTGRES_DB=postgres
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=niko1234
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: password
+
+
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.app
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres_con
+#      - redis
+#    networks:
+#      - bookstore-network
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_con:5432/postgres
+#      - SPRING_DATASOURCE_PASSWORD=niko1234
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+#      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+#      - SERVER_PORT=8080
+#      - SPRING_LIQUIBASE_CHANGE_LOG= classpath:db/changelog/db.changelog-master.xml
+#      - SPRING_LIQUIBASE_DEFAULT_SCHEMA= bookstore
+#      - SPRING_LIQUIBASE_ENABLED= true
+#      - SPRING_CACHE_TYPE= redis
+#      - SPRING_REDIS_PORT= 6379
+#      - SPRING_REDIS_HOST= redis
+#      - SPRING_REDIS_PASSWORD= password
+#
+#
+#networks:
+#  bookstore-network:
+#    driver: bridge

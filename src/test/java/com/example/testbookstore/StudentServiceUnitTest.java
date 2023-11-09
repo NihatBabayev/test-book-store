@@ -8,7 +8,6 @@ import com.example.testbookstore.entity.Student;
 import com.example.testbookstore.entity.User;
 import com.example.testbookstore.exception.BookAlreadyExistsInStudentList;
 import com.example.testbookstore.exception.BookNotFoundException;
-import com.example.testbookstore.exception.UserNotFoundException;
 import com.example.testbookstore.repository.AuthorRepository;
 import com.example.testbookstore.repository.BookRepository;
 import com.example.testbookstore.repository.StudentRepository;
@@ -27,7 +26,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class StudentServiceImplTest {
+class StudentServiceUnitTest {
 
     @Mock
     private StudentRepository studentRepository;
